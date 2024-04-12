@@ -28,9 +28,9 @@
             <h5 class="modal-title text-white " id="exampleModalLabel">Boka bord</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body mb-5">
             <form action="" class="form-group">
-              <div class="container mb-5">
+              <div class="container">
                 <div class="row gap-3 m-1">
                   <div class="col-1">
                     <label for="#name">Name</label>
@@ -44,7 +44,7 @@
                     <label for="#Phone">Phone</label>
                   </div>
                   <div class="col-10">
-                    <input type="text" id="Phone">
+                    <input type="tel" id="Phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
                   </div>
                 </div>
                 <div class="row gap-3 m-1">
@@ -77,7 +77,7 @@
                     <label for="#Time">Tid</label>
                   </div>
                   <div class="col-10">
-                    <input type="time" id="Time" value="">
+                    <input type="time" id="Time">
                   </div>
                 </div>
                 <div class="row gap-3 m-1">
@@ -108,17 +108,76 @@
     <div class="modal fade" id="AvbokaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header bg-primary">
-            <h5 class="modal-title text-white " id="exampleModalLabel">Boka bord</h5>
+          <div class="modal-header bg-warning">
+            <h5 class="modal-title text-white" id="exampleModalLabel">Avboka bord</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-
-            <p class="text-white bg-danger">Work in progress!</p>
+          <div class="modal-body mb-3">
+            <form action="" class="form-group" id="avbokaForm">
+              <div class="container">
+                <div class="row gap-3 m-1">
+                  <div class="col-1">
+                    <label for="#searchName">Name</label>
+                  </div>
+                  <div class="col-10">
+                    <input type="search" id="searchName">
+                  </div>
+                </div>
+              </div>
+              <div class="container d-none" id="containerRemove">
+                <div class="row gap-3 m-1">
+                    <div class="col-1">
+                      <label for="#timeRemove">Time</label>
+                    </div>
+                    <div class="col-10">
+                      <input type="time" name="" id="timeRemove" value="20:30">
+                    </div>
+                </div>
+                <div class="row gap-3 m-1">
+                  <div class="col-1">
+                    <label for="#selectRemove">Table</label>
+                  </div>
+                  <div class="col-10">
+                    <select name="" id="selectRemove">
+                      <option value="1">Table 1</option>
+                      <option value="1">Table 2</option>
+                      <option value="1">Table 3</option>
+                      <option value="1">Table 4</option>
+                      <option value="1">Table 5</option>
+                      <option value="1">Table 6</option>
+                      <option value="1">Table 7</option>
+                      <option value="1">Table 8</option>
+                      <option value="1" selected>Table 9</option>
+                      <option value="1">Table 10</option>
+                      <option value="1">Table 11</option>
+                      <option value="1">Table 12</option>
+                      <option value="1">Table 13</option>
+                      <option value="1">Table 14</option>
+                      <option value="1">Table 15</option>
+                      <option value="1">Table 16</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row gap-3 m-1">
+                  <div class="col-1">
+                    <label for="OvrigtRemove"></label>
+                  </div>
+                  <div class="col-10">
+                    <textarea id="OvrigtRemove"></textarea>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16" id="otherInfoRemove">
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                      <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
+                    </svg>
+                    <p id="infoRemove"></p>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
-            <button type="button" class="btn btn-success">Boka bord</button>
+            <button type="button" class="btn btn-warning">Omboka</button>
+            <button type="button" class="btn btn-success">Avboka bord</button>
           </div>
         </div>
       </div>
@@ -133,7 +192,6 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-
             <p class="text-white bg-danger">Work in progress!</p>
           </div>
           <div class="modal-footer">
