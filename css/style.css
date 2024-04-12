@@ -1,3 +1,9 @@
 #info{
     position: fixed;
 }
+
+#Ovrigt{
+    height: 200px;
+    width: 300px;
+    resize: none;
+}
