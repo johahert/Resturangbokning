@@ -6,7 +6,7 @@ window.addEventListener("load", () => {
 
     otherInfoRef.addEventListener("mouseover", () => {
         let infoRef = document.querySelector("#info");
-        infoRef.innerHTML = "Alergier, specialkost med mera";
+        infoRef.innerHTML = "Alergier, specialkost m.m";
     })
 
     otherInfoRef.addEventListener("mouseleave", () => {
