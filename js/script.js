@@ -86,7 +86,7 @@ function UpTime(houers, min, sec){
 $(document).ready(function(){
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
-      $("#myList li").filter(function() {
+      $("#bokningsLista li").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
@@ -97,7 +97,7 @@ $(document).ready(function(){
     $("#clearButton").on('click', function(){
       $myInput.value = '';
       var value = $myInput.value.toLowerCase();
-      $("#myList li").filter(function() {
+      $("#bokningsLista li").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
@@ -106,3 +106,88 @@ $(document).ready(function(){
 
 
 //#endregion
+
+//Klass för att skapa bokningar
+class Booking{
+    constructor(name, phone, bord, time, guests, otherInfo){
+        this.name = name;
+        this.phone = phone;
+        this.bord = bord;
+        this.time = time;
+        this.guests = guests;
+        this.otherInfo = otherInfo;
+    }
+}
+//array för att lagra bokningar
+let bookings = [];
+let ledigaBord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+$(document).ready(function(){
+    //Lägg till bord i select
+    UppdateraBord();
+});
+
+
+//Uppdatera lediga bord
+function UppdateraBord(){
+    let select = document.querySelector("#bokaBord");
+    select.innerHTML = "";
+    ledigaBord.forEach(bord => {
+        let option = document.createElement("option");
+        option.value = bord;
+        option.text = `Bord ${bord}`;
+        select.appendChild(option);
+    });
+}
+
+//Ta bort bord från lediga bord
+function taBortBord(bord){
+    console.log(bord);
+    let index = ledigaBord.indexOf(parseInt(bord));
+    if(index > -1){
+        ledigaBord.splice(index, 1);
+    }
+    console.log(ledigaBord);
+    UppdateraBord();
+}
+
+//Uppdatera bokningar
+function updateBookings(bord){
+    let bookingList = document.querySelector("#bokningsLista");
+
+    //Rensa listan
+    bookingList.innerHTML = "";
+
+    //Lägg till bokningar i listan
+    bookings.forEach(booking => {
+        taBortBord(booking.bord);
+        let li = document.createElement("li");
+        li.classList.add("list-group-item");
+        li.innerHTML = booking.name + " " + booking.phone + " " + booking.bord + " " + booking.time + " " + booking.guests + " " + booking.otherInfo;
+        bookingList.appendChild(li);
+    });
+}
+
+//Skicka bokning
+$("#bookingForm").submit(function(event){
+    event.preventDefault();
+    let name = $("#bokaNamn").val();
+    let phone = $("#bokaTelefon").val();
+    let bord = $("#bokaBord").val();
+    let time = $("#bokaTid").val();
+    let guests = $("#bokaGaster").val();
+    let otherInfo = $("#bokaOvrigt").val();
+
+    //Skapa ny bokning
+    let booking = new Booking(name, phone, bord, time, guests, otherInfo);
+    console.log(booking);
+    
+    //Rensa formulär
+    $("#bookingForm").trigger("reset");
+
+    //Lägg till bokning i array
+    bookings.push(booking);
+
+    //Uppdatera bokningar
+    updateBookings(bord);
+});
+
