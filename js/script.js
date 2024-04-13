@@ -79,3 +79,30 @@ function UpTime(houers, min, sec){
 
    return oGlobalobject.houers = houers, oGlobalobject.min = min, oGlobalobject.sec = sec;
 }
+
+//#region jquery //TODO - filter för checkboxes
+
+//sökfilter för lista
+$(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myList li").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+//Rensa sökfält och återställ lista
+$(document).ready(function(){
+    var $myInput = document.querySelector('#myInput');
+    $("#clearButton").on('click', function(){
+      $myInput.value = '';
+      var value = $myInput.value.toLowerCase();
+      $("#myList li").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+});
+
+
+
+//#endregion
