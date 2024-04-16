@@ -33,15 +33,24 @@ window.addEventListener("load", () => {
         console.log("submit");
        let searchNameRef = document.querySelector("#searchName");
 
-       if(searchNameRef.value === "Daniel"){
-        console.log("Hej Daniel!");
-        containerRemoveRef.classList.remove("d-none");
-       }
-       else{
-        containerRemoveRef.classList.add("d-none");
-        alert("Hittade inga bokningar")
+        bookings.forEach((Booking) => {
+            let searchNameValue = searchNameRef.value;
 
-       }
+            if(searchNameValue ==  Booking.name){
+                console.log("hej!");
+                containerRemoveRef.classList.remove("d-none");
+                let timeRef = document.querySelector("#timeRemove");
+                let tableRef = document.querySelector("#selectRemove");
+                let ovrigtRemoveRef = document.querySelector("#OvrigtRemove");
+
+                timeRef.value = Booking.time;
+                tableRef.value = Booking.bord;
+                ovrigtRemoveRef.value = Booking.otherInfo;
+            }
+            else{
+                containerRemoveRef.classList.add("d-none");
+            }  
+       });
     });
 
     /*Globaltobjekt som håller värden för timer som uppdaterar värdet i
