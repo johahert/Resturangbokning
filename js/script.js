@@ -171,10 +171,15 @@ function updateBookings(bord){
 
     //Lägg till bokningar i listan
     bookings.forEach(booking => {
+
+        //rensar bord
         taBortBord(booking.bord);
+
+        //Skapar list item
         const li = document.createElement("li");
-        
         li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+        
+        //#region Lägger till text
         const flexDiv = document.createElement("div");
         const h4 = document.createElement("h4");
         h4.innerHTML = `Bord : ${booking.bord}`;
@@ -196,10 +201,31 @@ function updateBookings(bord){
             child.style.padding = "0px";
         });
         li.appendChild(flexDiv);
-        const button = document.createElement("button");
-        button.classList.add("btn", "btn-danger");
-        button.innerHTML = "Ta bort";
-        li.appendChild(button);
+        //#endregion
+
+        //#region Lägger till knapper
+
+        //Skapar div för knappar
+        const knapparDiv = document.createElement("div");
+        knapparDiv.classList.add("d-flex", 'flex-column', 'gap-2');
+
+        //Avboka-knapp
+        const avbokaButton = document.createElement("button");
+        avbokaButton.classList.add("btn", "btn-danger");
+        avbokaButton.innerHTML = "Avboka";
+        knapparDiv.appendChild(avbokaButton);
+
+        //Omboka-knapp
+        const ombokaButton = document.createElement("button");
+        ombokaButton.classList.add("btn", "btn-warning");
+        ombokaButton.setAttribute("data-bs-toggle", "modal");
+        ombokaButton.setAttribute("data-bs-target", "#AvbokaModal");
+        ombokaButton.innerHTML = "Omboka";
+        knapparDiv.appendChild(ombokaButton);
+
+        li.appendChild(knapparDiv);
+        //#endregion
+
         bookingList.appendChild(li);
     });
 }
