@@ -28,6 +28,7 @@ window.addEventListener("load", () => {
     let formAvbokaRef = document.querySelector("#avbokaForm");
     let containerRemoveRef = document.querySelector("#containerRemove");
 
+    //Lyssnare för att hämta en bokning i listan
     formAvbokaRef.addEventListener("submit", (event) => {
         event.preventDefault();
         console.log("submit");
