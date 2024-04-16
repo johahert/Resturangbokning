@@ -182,13 +182,22 @@ function updateBookings(){
     //Lägg till bokningar i listan
     bookings.forEach(booking => {
 
+        //Hämtar bokningens tid i minuter
+        let bookingHours = parseInt(booking.time.split(":")[0]);
+        let bookingMinutes = parseInt(booking.time.split(":")[1]);
+        let bookingTotalMinutes = bookingHours * 60 + bookingMinutes;
+
         //rensar bord
         taBortBord(booking.bord);
 
         //Skapar list item
         const li = document.createElement("li");
         li.classList.add("list-group-item");
-        
+
+        //Lägger till data-time attribut
+        li.setAttribute("data-time", bookingTotalMinutes);
+
+        //skapar en wrapper för allt innehåll i li, filter toggle fungerade ej på d-flex
         const liWrapper = document.createElement("div");
         liWrapper.classList.add("d-flex", "justify-content-between", "align-items-center");
 
@@ -313,5 +322,33 @@ $("#bookingForm").submit(function(event){
 
     //Uppdatera bokningar
     updateBookings(bord);
+});
+
+
+//Filtera bokningar på tid
+$(document).ready(function(){
+
+    //Hämtar aktuell tid i minuter
+    var hours = new Date().getHours();
+    var minutes = new Date().getMinutes();
+    var totalMinutes = hours * 60 + minutes;
+
+    //Lyssnare för att filtrera bokningar på tid
+    $("#aktivaCheckbox").on("change", function(){
+        console.log(totalMinutes);
+        bookings.forEach(booking => {
+            $("#bokningsLista li").filter(function() {
+
+                //Hämtar li elementets data-time attribut
+                if($("#aktivaCheckbox").prop("checked")){
+                    $(this).toggle($(this).data("time") <= totalMinutes);
+                }
+                //Visar alla bokningar
+                else{
+                    $(this).toggle(true);
+                }
+            });
+        });
+    });
 });
 
