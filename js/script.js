@@ -264,6 +264,22 @@ function updateBookings(){
             ombokaTidRef.value = booking.time;
             ombokaTableRef.value = booking.bord;
             ombokaOvrigtRef.value = booking.otherInfo;
+
+            let ombokaButtonRef = document.querySelector(".ombokaBtn");
+            console.log(ombokaButtonRef);
+            ombokaButtonRef.addEventListener("click", () => {
+                booking.name = ombokaNameRef.value;
+                booking.phone = ombokaPhoneRef.value;
+                booking.time = ombokaTidRef.value;
+                booking.bord = ombokaTableRef.value;
+                booking.otherInfo = ombokaOvrigtRef.value;
+
+                h4.innerHTML = `Bord : ${booking.bord}`;
+                h5.innerHTML = `Namn : ${booking.name}`;
+                p1.innerHTML = `Telefon : ${booking.phone}`;
+                p2.innerHTML = `Tid : ${booking.time}`;
+                p3.innerHTML = `Antal gäster : ${booking.guests}`;
+            });
         })
     });
 }
