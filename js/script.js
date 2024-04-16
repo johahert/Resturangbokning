@@ -118,8 +118,6 @@ $(document).ready(function(){
     });
 });
 
-
-
 //#endregion
 
 //Klass för att skapa bokningar
@@ -147,6 +145,7 @@ function UppdateraBord(){
     let select = document.querySelector("#bokaBord");
     select.innerHTML = "";
     ledigaBord.sort(function(a,b){return a-b});
+    
     ledigaBord.forEach(bord => {
         let option = document.createElement("option");
         option.value = bord;
@@ -175,6 +174,8 @@ function addBord(bord){
 
 //Uppdatera bokningar
 function updateBookings(){
+
+
     let bookingList = document.querySelector("#bokningsLista");
 
     //Rensa listan
@@ -270,6 +271,20 @@ function updateBookings(){
             let ombokaTableRef = document.querySelector("#ombokaTable");
             let ombokaOvrigtRef = document.querySelector("#ombokaOvrigt");
 
+            ombokaTableRef.innerHTML = " ";
+
+            ledigaBord.forEach(bord => {
+                let optionRef = document.createElement("option");
+                optionRef.value = bord;
+                optionRef.text = `Bord ${bord}`;
+                ombokaTableRef.appendChild(optionRef);
+            })
+
+            let optionRef = document.createElement("option");
+            optionRef.value = booking.bord;
+            optionRef.text = `Bord ${booking.bord}`;
+            ombokaTableRef.appendChild(optionRef);
+
             ombokaNameRef.value = booking.name;
             ombokaPhoneRef.value = booking.phone;
             ombokaTidRef.value = booking.time;
@@ -277,7 +292,6 @@ function updateBookings(){
             ombokaOvrigtRef.value = booking.otherInfo;
 
             let ombokaButtonRef = document.querySelector(".ombokaBtn");
-            console.log(ombokaButtonRef);
             ombokaButtonRef.addEventListener("click", () => {
 
                 addBord(booking.bord);
@@ -295,7 +309,6 @@ function updateBookings(){
                 p3.innerHTML = `Antal gäster : ${booking.guests}`;
 
                 taBortBord(booking.bord);
-                updateBookings();
             });
         })
     });
@@ -325,7 +338,6 @@ $("#bookingForm").submit(function(event){
     updateBookings(bord);
 });
 
-
 //Filtera bokningar på tid
 $(document).ready(function(){
 
@@ -352,4 +364,3 @@ $(document).ready(function(){
         });
     });
 });
-
