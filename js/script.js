@@ -150,6 +150,8 @@ function taBortBord(bord){
     UppdateraBord();
 }
 
+
+
 //Uppdatera bokningar
 function updateBookings(bord){
     let bookingList = document.querySelector("#bokningsLista");
@@ -160,9 +162,34 @@ function updateBookings(bord){
     //Lägg till bokningar i listan
     bookings.forEach(booking => {
         taBortBord(booking.bord);
-        let li = document.createElement("li");
-        li.classList.add("list-group-item");
-        li.innerHTML = booking.name + " " + booking.phone + " " + booking.bord + " " + booking.time + " " + booking.guests + " " + booking.otherInfo;
+        const li = document.createElement("li");
+        
+        li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+        const flexDiv = document.createElement("div");
+        const h4 = document.createElement("h4");
+        h4.innerHTML = `Bord : ${booking.bord}`;
+        flexDiv.appendChild(h4);
+        const h5 = document.createElement("h5");
+        h5.innerHTML = `Namn : ${booking.name}`;
+        flexDiv.appendChild(h5);
+        const p1 = document.createElement("p");
+        p1.innerHTML = `Telefon : ${booking.phone}`;
+        flexDiv.appendChild(p1);
+        const p2 = document.createElement("p");
+        p2.innerHTML = `Tid : ${booking.time}`;
+        flexDiv.appendChild(p2);
+        const p3 = document.createElement("p");
+        p3.innerHTML = `Antal gäster : ${booking.guests}`;
+        flexDiv.appendChild(p3);
+        flexDiv.childNodes.forEach(child => {
+            child.style.margin = "0px";
+            child.style.padding = "0px";
+        });
+        li.appendChild(flexDiv);
+        const button = document.createElement("button");
+        button.classList.add("btn", "btn-danger");
+        button.innerHTML = "Ta bort";
+        li.appendChild(button);
         bookingList.appendChild(li);
     });
 }
