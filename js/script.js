@@ -99,7 +99,9 @@ $(document).ready(function(){
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
       $("#bokningsLista li").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        console.log($(this).find('h5').text().toLowerCase().indexOf(value) > -1);
+        $(this).toggle($(this).find('h5').text().toLowerCase().indexOf(value) > -1);
+        
       });
     });
   });
@@ -110,6 +112,7 @@ $(document).ready(function(){
       $myInput.value = '';
       var value = $myInput.value.toLowerCase();
       $("#bokningsLista li").filter(function() {
+        
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
@@ -169,7 +172,7 @@ function addBord(bord){
 
 
 //Uppdatera bokningar
-function updateBookings(bord){
+function updateBookings(){
     let bookingList = document.querySelector("#bokningsLista");
 
     //Rensa listan
@@ -183,10 +186,15 @@ function updateBookings(bord){
 
         //Skapar list item
         const li = document.createElement("li");
-        li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+        li.classList.add("list-group-item");
         
+        const liWrapper = document.createElement("div");
+        liWrapper.classList.add("d-flex", "justify-content-between", "align-items-center");
+
+
         //#region Lägger till text
         const flexDiv = document.createElement("div");
+        
         const h4 = document.createElement("h4");
         h4.innerHTML = `Bord : ${booking.bord}`;
         flexDiv.appendChild(h4);
@@ -206,7 +214,8 @@ function updateBookings(bord){
             child.style.margin = "0px";
             child.style.padding = "0px";
         });
-        li.appendChild(flexDiv);
+        liWrapper.appendChild(flexDiv);
+        li.appendChild(liWrapper);
         //#endregion
 
         //#region Lägger till knapper
@@ -237,7 +246,7 @@ function updateBookings(bord){
         ombokaButton.innerHTML = "Omboka";
         knapparDiv.appendChild(ombokaButton);
 
-        li.appendChild(knapparDiv);
+        liWrapper.appendChild(knapparDiv);
         //#endregion
 
         bookingList.appendChild(li);
