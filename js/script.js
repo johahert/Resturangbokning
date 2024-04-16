@@ -146,6 +146,7 @@ $(document).ready(function(){
 function UppdateraBord(){
     let select = document.querySelector("#bokaBord");
     select.innerHTML = "";
+    ledigaBord.sort(function(a,b){return a-b});
     ledigaBord.forEach(bord => {
         let option = document.createElement("option");
         option.value = bord;
