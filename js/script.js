@@ -29,7 +29,7 @@ window.addEventListener("load", () => {
     let containerRemoveRef = document.querySelector("#containerRemove");
 
     //Lyssnare för att hämta en bokning i listan
-    formAvbokaRef.addEventListener("submit", (event) => {
+    /* formAvbokaRef.addEventListener("submit", (event) => {
         event.preventDefault();
         console.log("submit");
        let searchNameRef = document.querySelector("#searchName");
@@ -53,7 +53,9 @@ window.addEventListener("load", () => {
             }  
        });
     });
+ */
 
+    bookings.forEach(Booking)
     /*Globaltobjekt som håller värden för timer som uppdaterar värdet i
     bokningsformulärets timer*/
     window.oGlobalobject = {
@@ -219,7 +221,7 @@ function updateBookings(bord){
         const ombokaButton = document.createElement("button");
         ombokaButton.classList.add("btn", "btn-warning");
         ombokaButton.setAttribute("data-bs-toggle", "modal");
-        ombokaButton.setAttribute("data-bs-target", "#AvbokaModal");
+        ombokaButton.setAttribute("data-bs-target", "#OmbokaModal");
         ombokaButton.innerHTML = "Omboka";
         knapparDiv.appendChild(ombokaButton);
 
@@ -227,6 +229,21 @@ function updateBookings(bord){
         //#endregion
 
         bookingList.appendChild(li);
+        
+        
+        ombokaButton.addEventListener("click", () => {
+            let ombokaNameRef = document.querySelector("#ombokaName");
+            let ombokaPhoneRef = document.querySelector("#ombokaPhone");
+            let ombokaTidRef = document.querySelector("#ombokaTid");
+            let ombokaTableRef = document.querySelector("#ombokaTable");
+            let ombokaOvrigtRef = document.querySelector("#ombokaOvrigt");
+
+            ombokaNameRef.value = booking.name;
+            ombokaPhoneRef.value = booking.phone;
+            ombokaTidRef.value = booking.time;
+            ombokaTableRef.value = booking.bord;
+            ombokaOvrigtRef.value = booking.otherInfo;
+        })
     });
 }
 
