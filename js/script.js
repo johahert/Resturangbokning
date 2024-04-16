@@ -164,6 +164,7 @@ function taBortBord(bord){
     console.log(ledigaBord);
     UppdateraBord();
 }
+
 function addBord(bord){
     ledigaBord.push(bord);
     UppdateraBord();
@@ -268,6 +269,9 @@ function updateBookings(){
             let ombokaButtonRef = document.querySelector(".ombokaBtn");
             console.log(ombokaButtonRef);
             ombokaButtonRef.addEventListener("click", () => {
+
+                addBord(booking.bord);
+
                 booking.name = ombokaNameRef.value;
                 booking.phone = ombokaPhoneRef.value;
                 booking.time = ombokaTidRef.value;
@@ -279,6 +283,9 @@ function updateBookings(){
                 p1.innerHTML = `Telefon : ${booking.phone}`;
                 p2.innerHTML = `Tid : ${booking.time}`;
                 p3.innerHTML = `Antal gäster : ${booking.guests}`;
+
+                taBortBord(booking.bord);
+                updateBookings();
             });
         })
     });
