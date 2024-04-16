@@ -161,6 +161,10 @@ function taBortBord(bord){
     console.log(ledigaBord);
     UppdateraBord();
 }
+function addBord(bord){
+    ledigaBord.push(bord);
+    UppdateraBord();
+}
 
 
 
@@ -215,6 +219,14 @@ function updateBookings(bord){
         const avbokaButton = document.createElement("button");
         avbokaButton.classList.add("btn", "btn-danger");
         avbokaButton.innerHTML = "Avboka";
+        avbokaButton.addEventListener("click", () => {
+            let index = bookings.indexOf(booking);
+            if(index > -1){
+                bookings.splice(index, 1);
+                addBord(booking.bord);
+                updateBookings();
+            }
+        });
         knapparDiv.appendChild(avbokaButton);
 
         //Omboka-knapp
