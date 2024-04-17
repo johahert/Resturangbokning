@@ -39,14 +39,26 @@
         <input type="text" class="form-control" placeholder="Filtera lista..." id="myInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
         <button class="btn btn-danger" type="button" id="clearButton">Clear</button>
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-        <label class="form-check-label" for="inlineCheckbox1">Aktiva</label>
+      <div class="d-flex align-items-center">
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="aktivaCheckbox" value="option1">
+          <label class="form-check-label" for="aktivaCheckbox">Aktiva</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+          <label class="form-check-label" for="inlineCheckbox2">Kommande</label>
+        </div>
+        <div class="">
+          <select class="form-select" id="sortSelect" aria-label="Sortera Lista">
+            <option selected>Sortera</option>
+            <option >Bordsnummer</option>
+            <option >Tid</option>
+            <option >Namn</option>
+          </select>
+        </div>
       </div>
-      <div class="form-check form-check-inline pb-3">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-        <label class="form-check-label" for="inlineCheckbox2">Kommande</label>
-      </div>
+      
       <!-- Lista för bokningar -->
       <ul class="list-group list-group-flush" id="bokningsLista">
         

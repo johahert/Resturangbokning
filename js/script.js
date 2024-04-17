@@ -129,6 +129,12 @@ class Booking{
         this.time = time;
         this.guests = guests;
         this.otherInfo = otherInfo;
+
+        this.timeMins = function(){
+            let bookingHours = parseInt(this.time.split(":")[0]);
+            let bookingMinutes = parseInt(this.time.split(":")[1]);
+            return bookingHours * 60 + bookingMinutes;
+        }
     }
 }
 //array för att lagra bokningar
@@ -156,12 +162,12 @@ function UppdateraBord(){
 
 //Ta bort bord från lediga bord
 function taBortBord(bord){
-    console.log(bord);
+    //console.log(bord);
     let index = ledigaBord.indexOf(parseInt(bord));
     if(index > -1){
         ledigaBord.splice(index, 1);
     }
-    console.log(ledigaBord);
+    //console.log(ledigaBord);
     UppdateraBord();
 }
 
@@ -184,10 +190,7 @@ function updateBookings(){
     //Lägg till bokningar i listan
     bookings.forEach(booking => {
 
-        //Hämtar bokningens tid i minuter
-        let bookingHours = parseInt(booking.time.split(":")[0]);
-        let bookingMinutes = parseInt(booking.time.split(":")[1]);
-        let bookingTotalMinutes = bookingHours * 60 + bookingMinutes;
+        
 
         //rensar bord
         taBortBord(booking.bord);
@@ -197,7 +200,7 @@ function updateBookings(){
         li.classList.add("list-group-item");
 
         //Lägger till data-time attribut
-        li.setAttribute("data-time", bookingTotalMinutes);
+        li.setAttribute("data-time", booking.timeMins());
 
         //skapar en wrapper för allt innehåll i li, filter toggle fungerade ej på d-flex
         const liWrapper = document.createElement("div");
@@ -338,6 +341,8 @@ $("#bookingForm").submit(function(event){
     updateBookings(bord);
 });
 
+
+//#region funktioer för att filtera och sortera lista
 //Filtera bokningar på tid
 $(document).ready(function(){
 
@@ -370,6 +375,10 @@ $(document).ready(function(){
     $('#initSampleButton').on('click', () =>{
         let antalGaster = parseInt($('#sampleGasterInput').val());
         if((antalGaster <= 16 && antalGaster > 0) && !isNaN(antalGaster)){
+
+            //Rensa lediga bord
+            ledigaBord = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+            bookings = [];
             for(let i = 0; i < antalGaster; i++){
 
                 //Array med sample namn
@@ -385,8 +394,17 @@ $(document).ready(function(){
                 //Hämtar ett random bord ur lediga bord
                 var bord = ledigaBord[Math.floor(Math.random() * ledigaBord.length)];
 
-                //Slumpar en tid mellan 10:00 och 23:59
-                var time = Math.floor((Math.random() * 14) + 10) + ':' + Math.floor(Math.random() * 60);
+                //Slumpar en tid mellan 8-22
+                var hrs = Math.floor(Math.random() * 15) + 8;
+                if(hrs < 10){
+                    hrs = '0' + hrs;
+                }
+                var mins = Math.floor(Math.random() * 60);
+                if(mins < 10){
+                    mins = '0' + mins;
+                }
+                var time = `${hrs}:${mins}`;
+
                 var gaster = Math.floor(Math.random() * 5) + 1;
 
                 //otherinfo tom just nu
@@ -405,3 +423,30 @@ $(document).ready(function(){
             
     });
 });
+
+//Sortera lista via select - kan för tillfället sortera på namn, tid och bordsnummer
+$(document).ready(() =>{
+    $('#sortSelect').on('change', () => {
+        console.log($('#sortSelect').val());
+        if($('#sortSelect').val() == 'Namn'){
+            bookings.sort((a, b) => a.name.localeCompare(b.name));
+            console.log(bookings);
+            updateBookings();
+        }
+        if($('#sortSelect').val() == 'Tid'){
+            bookings.sort((a, b) => a.timeMins() - b.timeMins());
+            console.log(bookings);
+            updateBookings();
+        }
+        if($('#sortSelect').val() == 'Bordsnummer'){
+            bookings.sort((a, b) => a.bord - b.bord);
+            console.log(bookings);
+            updateBookings();
+        }
+
+    });
+});
+
+//TODO - filter för "kommande-checkbox", ev. byta ut checkbox till radiobuttons"
+
+//#endregion
