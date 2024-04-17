@@ -364,3 +364,44 @@ $(document).ready(function(){
         });
     });
 });
+
+//Skapar sample-bokningar för testning - Fyll i antal gäster och klicka på knappen
+$(document).ready(function(){
+    $('#initSampleButton').on('click', () =>{
+        let antalGaster = parseInt($('#sampleGasterInput').val());
+        if((antalGaster <= 16 && antalGaster > 0) && !isNaN(antalGaster)){
+            for(let i = 0; i < antalGaster; i++){
+
+                //Array med sample namn
+                var sampleNames = ['Kalle', 'Pelle', 'Olle', 'Nisse', 'Bosse', 'Lasse', 'Hasse', 'Johan', 'Johanna', 'Anna', 'Eva', 'Sara', 'Lena', 'Maja', 'Karin', 'Linn', 'Emma', 'Ida', 'Lisa', 'Maria', 'Jenny', 'Sofia', 'Hanna', 'Malin', 'Elin', 'Johannes', 'Anders', 'Peter', 'Mikael', 'Jonas', 'Fredrik', 'Daniel'];
+
+                //Slumpar ett mobilnummer
+                var name = sampleNames[Math.floor(Math.random() * sampleNames.length)];
+                var phone = '070-';
+                for(let i = 0; i < 7; i++){
+                    phone += Math.floor(Math.random() * 10);
+                }
+
+                //Hämtar ett random bord ur lediga bord
+                var bord = ledigaBord[Math.floor(Math.random() * ledigaBord.length)];
+
+                //Slumpar en tid mellan 10:00 och 23:59
+                var time = Math.floor((Math.random() * 14) + 10) + ':' + Math.floor(Math.random() * 60);
+                var gaster = Math.floor(Math.random() * 5) + 1;
+
+                //otherinfo tom just nu
+                var otherinfo = '';
+
+                //Skapar en bokning och lägger till
+                var booking = new Booking(name, phone, bord, time, gaster, otherinfo);
+                bookings.push(booking);
+
+                //Ta bort bord från lediga bord
+                taBortBord(bord);
+            }
+        }
+            //Uppdatera bokningar
+            updateBookings();
+            
+    });
+});
