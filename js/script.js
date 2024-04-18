@@ -449,4 +449,7 @@ $(document).ready(() =>{
 //TODO - Lägg till möjlighet att ändra riktning på sortering
 //TODO - filter för "kommande-checkbox", ev. byta ut checkbox till radiobuttons"
 
+function enfunktion(){
+    console.log("hej");
+}
 //#endregion
