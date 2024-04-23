@@ -21,7 +21,7 @@ window.addEventListener("load", () => {
 
 //#region hämta klockslag
 //Funktion som uppdaterar klockslaget varje secund när timern körs
-function UpTime(houers, min, sec){
+/* function UpTime(houers, min, sec){
     sec += 1;
     if(sec == 60){
         min += 1;
@@ -39,7 +39,14 @@ function UpTime(houers, min, sec){
     timRef.value = houers + ":" + min;
 
    return oGlobalobject.houers = houers, oGlobalobject.min = min, oGlobalobject.sec = sec;
-}
+} */
+//Hämtar aktuell tid och skriver ut i formuläret när modal klickas
+$("#bokaModalButton").on("click", () => {
+    let hrs = new Date().getHours();
+    let min = new Date().getMinutes();
+    $("#bokaTid").val(`${hrs}:${min}`);
+});
+
 //#endregion
 
 //#region sökfunktioner 
