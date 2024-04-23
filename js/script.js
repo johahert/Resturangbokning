@@ -335,6 +335,7 @@ function updateBookings(){
             });
         })
     });
+ 
 }
 
 //Skicka bokning
@@ -365,31 +366,35 @@ $("#bookingForm").submit(function(event){
 //#region funktioer för att filtera och sortera lista
 //Filtera bokningar på tid
 $(document).ready(function(){
+    //Lyssnare för att filtrera bokningar på tid
+    $(".form-check-input").on("change", function(){      
+        filtreraLista();     
+    });
+});
 
+function filtreraLista(){
     //Hämtar aktuell tid i minuter
     var hours = new Date().getHours();
     var minutes = new Date().getMinutes();
     var totalMinutes = hours * 60 + minutes;
-
-    //Lyssnare för att filtrera bokningar på tid
-    $("#aktivaCheckbox").on("change", function(){
-        console.log(totalMinutes);
-        bookings.forEach(booking => {
-            $("#bokningsLista li").filter(function() {
-
-                //Hämtar li elementets data-time attribut
-                if($("#aktivaCheckbox").prop("checked")){
-                    $(this).toggle($(this).data("time") <= totalMinutes);
-                }
-                //Visar alla bokningar
-                else{
-                    $(this).toggle(true);
-                }
-            });
-        });
+    
+    var aktiva = $("#aktivaCheckbox").prop("checked");
+    var kommande = $("#kommandeCheckbox").prop("checked");
+    $("#bokningsLista li").filter(function() {
+        //Hämtar li elementets data-time attribut
+        if(aktiva && !kommande){
+            $(this).toggle($(this).data("time") <= totalMinutes);
+        } else if(!aktiva && kommande){
+            $(this).toggle($(this).data("time") > totalMinutes);
+        } else if(aktiva && kommande){
+            $(this).toggle(true);
+        } else{
+            $(this).toggle(false);
+        }
+        //Visar alla bokningar
+        
     });
-});
-
+}
 //Skapar sample-bokningar för testning - Fyll i antal gäster och klicka på knappen
 $(document).ready(function(){
     $('#initSampleButton').on('click', () =>{
@@ -438,8 +443,9 @@ $(document).ready(function(){
                 taBortBord(bord);
             }
         }
-            //Uppdatera bokningar
-            updateBookings();
+        //Uppdatera bokningar
+        sorteraLista();
+        filtreraLista();
             
     });
 });
@@ -448,27 +454,57 @@ $(document).ready(function(){
 $(document).ready(() =>{
     $('#sortSelect').on('change', () => {
         console.log($('#sortSelect').val());
-        if($('#sortSelect').val() == 'Namn'){
+        sorteraLista();
+    });
+});
+
+$(document).ready(() =>{
+    $("input[name='sorteraRadio']").on('change', () => {
+        sorteraLista();
+    });
+});
+
+//TODO - Lägg till möjlighet att ändra riktning på sortering
+function sorteraLista(){
+
+    var radioValue = $("input[name='sorteraRadio']:checked").val();
+    console.log(radioValue)
+
+    if($('#sortSelect').val() == 'Namn'){
+        if(radioValue == 'upp'){
             bookings.sort((a, b) => a.name.localeCompare(b.name));
-            console.log(bookings);
-            updateBookings();
+        } else if(radioValue == 'ner'){
+            bookings.sort((a, b) => b.name.localeCompare(a.name));
         }
-        if($('#sortSelect').val() == 'Tid'){
+        
+    }
+    if($('#sortSelect').val() == 'Tid'){
+        if(radioValue == 'upp'){
             bookings.sort((a, b) => a.timeMins() - b.timeMins());
-            console.log(bookings);
-            updateBookings();
+        } else if(radioValue == 'ner'){
+            bookings.sort((a, b) => b.timeMins() - a.timeMins());
         }
-        if($('#sortSelect').val() == 'Bordsnummer'){
+        
+    }
+    if($('#sortSelect').val() == 'Bordsnummer'){
+        if(radioValue == 'upp'){
             bookings.sort((a, b) => a.bord - b.bord);
             console.log(bookings);
             updateBookings();
         }
+        else if(radioValue == 'ner'){
+            bookings.sort((a, b) => b.bord - a.bord);
+        }
 
-    });
-});
+    };
+
+};
 //TODO - Lägg till möjlighet att ändra riktning på sortering
 //TODO - filter för "kommande-checkbox", ev. byta ut checkbox till radiobuttons"
 
+function enfunktion(){
+    console.log("hej");
+}
 //#endregion
 
 
