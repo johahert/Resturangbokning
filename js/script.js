@@ -493,7 +493,6 @@ function displayQueue(){
 
     //Lägg till bokningar i listan
     Queues.forEach(queue => {
-
         //Skapar list item
         const li = document.createElement("li");
         li.classList.add("list-group-item");
@@ -549,16 +548,32 @@ function displayQueue(){
         knapparDiv.appendChild(removeButton);
 
         //Omboka-knapp
-        const ombokaButton = document.createElement("button");
-        ombokaButton.classList.add("btn", "btn-warning");
-        ombokaButton.setAttribute("data-bs-toggle", "modal");
-        ombokaButton.setAttribute("data-bs-target", "#OmbokaModal");
-        ombokaButton.innerHTML = "Omboka";
-        knapparDiv.appendChild(ombokaButton);
+        const bokaButton = document.createElement("button");
+        bokaButton.classList.add("btn", "btn-success");
+        bokaButton.setAttribute("data-bs-toggle", "modal");
+        bokaButton.setAttribute("data-bs-target", "#exampleModal");
+        bokaButton.innerHTML = "Bokabord";
+
+        bokaButton.addEventListener("click", () => {
+            $("#bokaNamn").val(queue.name);
+            $("#bokaTelefon").val(queue.phone);
+            $("#bokaGaster").val(queue.guests);
+            $("#bokaTid").val(queue.time);
+
+            let index = Queues.indexOf(queue);
+            if(index > -1){
+                Queues.splice(index, 1);
+                displayQueue();
+            }
+        })
+
+        knapparDiv.appendChild(bokaButton);
 
         liWrapper.appendChild(knapparDiv);
         //#endregion
 
         queueList.appendChild(li);
+
+        $("#bookingForm").trigger("reset");
     })
 }
