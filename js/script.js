@@ -1,4 +1,5 @@
 "use strict";
+//#region Fönsterlyssnare
 
 window.addEventListener("load", () => {
 
@@ -16,7 +17,9 @@ window.addEventListener("load", () => {
     }, 1000);
     
 })
+//#endregion
 
+//#region hämta klockslag
 //Funktion som uppdaterar klockslaget varje secund när timern körs
 function UpTime(houers, min, sec){
     sec += 1;
@@ -37,8 +40,9 @@ function UpTime(houers, min, sec){
 
    return oGlobalobject.houers = houers, oGlobalobject.min = min, oGlobalobject.sec = sec;
 }
+//#endregion
 
-//#region jquery //TODO - filter för checkboxes
+//#region sökfunktioner 
 
 //sökfilter för lista
 $(document).ready(function(){
@@ -66,7 +70,8 @@ $(document).ready(function(){
 
 //#endregion
 
-//Klass för att skapa bokningar
+//#region klasser och listor
+
 class Booking{
     constructor(name, phone, bord, time, guests, otherInfo){
         this.name = name;
@@ -109,6 +114,9 @@ class Queue{
 
 let Queues = [];
 
+//#endregion
+
+//#region funktiioner för bord
 //Uppdatera lediga bord
 function UppdateraBord(){
     let select = document.querySelector("#bokaBord");
@@ -138,12 +146,11 @@ function addBord(bord){
     ledigaBord.push(bord);
     UppdateraBord();
 }
+//#endregion
 
-
-
+//#region uppdatera bokning
 //Uppdatera bokningar
 function updateBookings(){
-
 
     let bookingList = document.querySelector("#bokningsLista");
 
@@ -276,11 +283,16 @@ function updateBookings(){
 
                 taBortBord(booking.bord);
             });
+            console.log(document.querySelectorAll(".bokaBordButton"))
+            uppdateraKnappar();
         })
     });
- 
+    
+    uppdateraKnappar();
 }
+//#endregion
 
+//#region bokning-submit
 //Skicka bokning
 $("#bookingForm").submit(function(event){
     event.preventDefault();
@@ -302,9 +314,11 @@ $("#bookingForm").submit(function(event){
     bookings.push(booking);
 
     //Uppdatera bokningar
-    updateBookings(bord);
+    updateBookings();
+    sorteraLista();
+    filtreraLista();
 });
-
+//#endregion
 
 //#region funktioer för att filtera och sortera lista
 //Filtera bokningar på tid
@@ -450,20 +464,23 @@ function sorteraLista(){
 
 //#endregion
 
+//#region funktioner för att hantera kö
 
-    let addToQueueRef = document.querySelector("#addToQueue");
-    addToQueueRef.addEventListener("click", (event) => {
-        event.preventDefault();
-        let name = $("#bokaNamn").val();
-        let phone = $("#bokaTelefon").val();
-        let time = $("#bokaTid").val();
-        let guests = $("#bokaGaster").val();
-    
-        let queue = new Queue(name, phone, time, guests);
-        Queues.push(queue);
-        displayQueue();
-    })
+//Lyssnare för att lägga till i kö
+let addToQueueRef = document.querySelector("#addToQueue");
+addToQueueRef.addEventListener("click", (event) => {
+    event.preventDefault();
+    let name = $("#bokaNamn").val();
+    let phone = $("#bokaTelefon").val();
+    let time = $("#bokaTid").val();
+    let guests = $("#bokaGaster").val();
 
+    let queue = new Queue(name, phone, time, guests);
+    Queues.push(queue);
+    displayQueue();
+})
+
+//visar kö
 function displayQueue(){
     let queueList = document.querySelector("#QueueList");
 
@@ -528,9 +545,9 @@ function displayQueue(){
 
         //Omboka-knapp
         const bokaButton = document.createElement("button");
-        bokaButton.classList.add("btn", "btn-primary");
+        bokaButton.classList.add("btn", "btn-primary", "bokaBordButton");
         bokaButton.setAttribute("data-bs-toggle", "modal");
-        bokaButton.setAttribute("data-bs-target", "#exampleModal");
+        bokaButton.setAttribute("data-bs-target", "#bokaModal");
         bokaButton.innerHTML = "Boka Bord";
 
         bokaButton.addEventListener("click", () => {
@@ -555,4 +572,24 @@ function displayQueue(){
 
         $("#bookingForm").trigger("reset");
     })
+    uppdateraKnappar();
 }
+//#endregion
+
+//#region  uppdatera knappar
+function uppdateraKnappar(){
+    if(ledigaBord.length == 0){
+        document.querySelector('#bokaButton').classList.add('d-none');
+        document.querySelector('#fullBokatDiv').classList.remove('d-none');
+        document.querySelectorAll('.bokaBordButton').forEach(button => {
+            button.classList.add('d-none');
+        });
+    } else {
+        document.querySelector('#bokaButton').classList.remove('d-none');  
+        document.querySelector('#fullBokatDiv').classList.add('d-none');
+        document.querySelectorAll('.bokaBordButton').forEach(button => {
+            button.classList.remove('d-none');
+        });
+    }
+}
+//#endregion

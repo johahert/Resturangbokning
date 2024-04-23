@@ -192,6 +192,7 @@
           <div class="modal-header">
             <h5 class="modal-title" id="bokaModalLabel">Boka</h5>
           </div>
+          
           <form id="bookingForm">
           <div class="modal-body">
               <div class="form-group">
@@ -219,7 +220,11 @@
               <div class="mb-3">
                 <label for="bokaOvrigt" class="col-form-label">Övrig info:</label>
                 <textarea class="form-control" id="bokaOvrigt" placeholder="allergier, specialkost mm."></textarea>
-                
+              </div>
+              <div id="fullBokatDiv" class="d-none">
+                <h3 class="text-danger">
+                  Alla bord är fullbokade
+                </h3>
               </div>
             </div>
             <div class="modal-footer">
@@ -228,6 +233,7 @@
               <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="bokaButton">Boka</button>
             </div>
           </form>
+          </div>
         </div>
       </div>
     </div>
