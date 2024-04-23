@@ -33,8 +33,14 @@
     </nav>
   </header>
   <main>
-    <!-- #region sökfilter och checkbox, mer filter ska tillkomma, lista-->
-    <div class="container py-5">
+    <div class="container-xl py-5">
+      <div class="row">
+        <!-- #region sökfilter och checkbox, mer filter ska tillkomma, lista-->
+
+      
+      <div class="col-12 col-lg-6">
+
+      
       <div class="input-group input-group mb-3">
         <input type="text" class="form-control" placeholder="Filtera lista..." id="myInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
         <button class="btn btn-danger" type="button" id="clearButton">Clear</button>
@@ -63,8 +69,16 @@
       <ul class="list-group list-group-flush" id="bokningsLista">
         
       </ul>
+
     </div>
     <!-- #endregion -->
+        <!-- #region Restauranglayout -->
+        <div class="col-12 col-lg-6 p-5 border rounded-5 bg-light">
+          <img src="/images/restau.png" class="img-fluid" alt="Översikt av restaurangens layout">
+        </div>
+        <!-- #endregion -->
+      </div>
+    </div>
 
     <!-- #region Modal för omboka bord -->
     <div class="modal fade" id="OmbokaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
