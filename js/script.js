@@ -398,6 +398,7 @@ function filtreraLista(){
 //Skapar sample-bokningar för testning - Fyll i antal gäster och klicka på knappen
 $(document).ready(function(){
     $('#initSampleButton').on('click', () =>{
+        console.log('hej');
         let antalGaster = parseInt($('#sampleGasterInput').val());
         if((antalGaster <= 16 && antalGaster > 0) && !isNaN(antalGaster)){
 
@@ -444,6 +445,7 @@ $(document).ready(function(){
             }
         }
         //Uppdatera bokningar
+        updateBookings();
         sorteraLista();
         filtreraLista();
             
@@ -490,21 +492,19 @@ function sorteraLista(){
         if(radioValue == 'upp'){
             bookings.sort((a, b) => a.bord - b.bord);
             console.log(bookings);
-            updateBookings();
         }
         else if(radioValue == 'ner'){
             bookings.sort((a, b) => b.bord - a.bord);
         }
-
+        
     };
+    updateBookings();
 
 };
 //TODO - Lägg till möjlighet att ändra riktning på sortering
 //TODO - filter för "kommande-checkbox", ev. byta ut checkbox till radiobuttons"
 
-function enfunktion(){
-    console.log("hej");
-}
+
 //#endregion
 
 
