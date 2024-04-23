@@ -12,6 +12,7 @@
 </head>
 
 <body>
+  
   <header>
     <nav class="d-flex justify-content-center align-items-end gap-3 bg-dark p-3">
       <div>
@@ -185,27 +186,27 @@
 
     <!-- #endregion -->
 
-    <!-- #region bokamodal-->
-    <div class="modal fade" id="bokaModal" tabindex="-1"  aria-labelledby="bokaModalLabel" aria-hidden="true">
+    <!-- #region Modal för att boka bord-->
+    <div class="modal fade" id="bokaModal" tabindex="-1" aria-labelledby="bokaModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="bokaModalLabel">Boka</h5>
           </div>
           
-          <form id="bookingForm">
+          <form id="bookingForm" class="needs-validation" novalidate>
           <div class="modal-body">
               <div class="form-group">
                 <label for="bokaNamn" class="col-form-label">Namn:</label>
-                <input type="text" class="form-control" id="bokaNamn">
+                <input type="text" class="form-control" id="bokaNamn" required>
               </div>
               <div class="form-group">
                 <label for="bokaTelefon" class="col-form-label">Telefon:</label>
-                <input type="text" class="form-control" id="bokaTelefon">
+                <input type="text" class="form-control" id="bokaTelefon" required>
               </div>
               <div class="form-group">
                 <label for="bokaGaster" class="col-form-label" >Antal Gäster:</label>
-                <input type="number" min="1" max="5" class="form-control" id="bokaGaster">
+                <input type="number" min="1" max="5" class="form-control" id="bokaGaster" required>
               </div>
               <div class="form-group ">
                 <label for="bokaTid" class="col-form-label">Tid:</label>
@@ -230,7 +231,7 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Avbryt</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="addToQueue">Lägg till i kö</button>
-              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="bokaButton">Boka</button>
+              <button type="submit" class="btn btn-primary"  id="bokaButton">Boka</button>
             </div>
           </form>
           </div>

@@ -1,10 +1,9 @@
 "use strict";
 //#region Fönsterlyssnare
 
-window.addEventListener("load", () => {
+/* window.addEventListener("load", () => {
 
-    /*Globaltobjekt som håller värden för timer som uppdaterar värdet i
-    bokningsformulärets timer*/
+   
     window.oGlobalobject = {
         timer : null,
         houers : new Date().getHours(),
@@ -16,7 +15,7 @@ window.addEventListener("load", () => {
         UpTime(oGlobalobject.houers, oGlobalobject.min, oGlobalobject.sec)
     }, 1000);
     
-})
+}) */
 //#endregion
 
 //#region hämta klockslag
@@ -303,6 +302,16 @@ function updateBookings(){
 //Skicka bokning
 $("#bookingForm").submit(function(event){
     event.preventDefault();
+    let form = document.querySelector("#bookingForm");
+    if (!form.checkValidity()){
+        console.log('Formuläret är inte korrekt ifyllt');
+        form.classList.add('was-validated')
+        
+        return;
+    }
+    //återställ validering
+    form.classList.remove('was-validated');
+
     let name = $("#bokaNamn").val();
     let phone = $("#bokaTelefon").val();
     let bord = $("#bokaBord").val();
@@ -324,6 +333,9 @@ $("#bookingForm").submit(function(event){
     updateBookings();
     sorteraLista();
     filtreraLista();
+
+    //dismiss modal
+    $("#bokaModal").modal("hide");
 });
 //#endregion
 
