@@ -28,6 +28,7 @@ window.addEventListener("load", () => {
     let formAvbokaRef = document.querySelector("#avbokaForm");
     let containerRemoveRef = document.querySelector("#containerRemove");
 
+    
     //Lyssnare för att hämta en bokning i listan
     /* formAvbokaRef.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -54,7 +55,7 @@ window.addEventListener("load", () => {
        });
     });
  */
-
+    
     bookings.forEach(Booking)
     /*Globaltobjekt som håller värden för timer som uppdaterar värdet i
     bokningsformulärets timer*/
@@ -68,6 +69,8 @@ window.addEventListener("load", () => {
     oGlobalobject.timer = setInterval(() => {
         UpTime(oGlobalobject.houers, oGlobalobject.min, oGlobalobject.sec)
     }, 1000);
+
+    
     
 })
 
@@ -137,6 +140,7 @@ class Booking{
         }
     }
 }
+
 //array för att lagra bokningar
 let bookings = [];
 let ledigaBord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
@@ -145,6 +149,22 @@ $(document).ready(function(){
     UppdateraBord();
 });
 
+class Queue{
+    constructor(name, phone, time, guests){
+        this.name = name;
+        this.phone = phone;
+        this.time = time;
+        this.guests = guests;
+
+        this.timeMins = function(){
+            let bookingHours = parseInt(this.time.split(":")[0]);
+            let bookingMinutes = parseInt(this.time.split(":")[1]);
+            return bookingHours * 60 + bookingMinutes;
+        }
+    }
+}
+
+let Queues = [];
 
 //Uppdatera lediga bord
 function UppdateraBord(){
@@ -449,7 +469,96 @@ $(document).ready(() =>{
 //TODO - Lägg till möjlighet att ändra riktning på sortering
 //TODO - filter för "kommande-checkbox", ev. byta ut checkbox till radiobuttons"
 
-function enfunktion(){
-    console.log("hej");
-}
 //#endregion
+
+
+    let addToQueueRef = document.querySelector("#addToQueue");
+    addToQueueRef.addEventListener("click", (event) => {
+        event.preventDefault();
+        let name = $("#bokaNamn").val();
+        let phone = $("#bokaTelefon").val();
+        let time = $("#bokaTid").val();
+        let guests = $("#bokaGaster").val();
+    
+        let queue = new Queue(name, phone, time, guests);
+        Queues.push(queue);
+        displayQueue();
+    })
+
+function displayQueue(){
+    let queueList = document.querySelector("#QueueList");
+
+    //Rensa listan
+    queueList.innerHTML = "";
+
+    //Lägg till bokningar i listan
+    Queues.forEach(queue => {
+
+        //Skapar list item
+        const li = document.createElement("li");
+        li.classList.add("list-group-item");
+
+        //Lägger till data-time attribut
+        li.setAttribute("data-time", queue.timeMins());
+
+        //skapar en wrapper för allt innehåll i li, filter toggle fungerade ej på d-flex
+        const liWrapper = document.createElement("div");
+        liWrapper.classList.add("d-flex", "justify-content-between", "align-items-center");
+
+
+        //#region Lägger till text
+        const flexDiv = document.createElement("div");
+
+        const h5 = document.createElement("h5");
+        h5.innerHTML = `Namn : ${queue.name}`;
+        flexDiv.appendChild(h5);
+        const p1 = document.createElement("p");
+        p1.innerHTML = `Telefon : ${queue.phone}`;
+        flexDiv.appendChild(p1);
+        const p2 = document.createElement("p");
+        p2.innerHTML = `Tid : ${queue.time}`;
+        flexDiv.appendChild(p2);
+        const p3 = document.createElement("p");
+        p3.innerHTML = `Antal gäster : ${queue.guests}`;
+        flexDiv.appendChild(p3);
+        flexDiv.childNodes.forEach(child => {
+            child.style.margin = "0px";
+            child.style.padding = "0px";
+        });
+        liWrapper.appendChild(flexDiv);
+        li.appendChild(liWrapper);
+        //#endregion
+
+        //#region Lägger till knapper
+
+        //Skapar div för knappar
+        const knapparDiv = document.createElement("div");
+        knapparDiv.classList.add("d-flex", 'flex-column', 'gap-2');
+
+        //Avboka-knapp
+        const removeButton = document.createElement("button");
+        removeButton.classList.add("btn", "btn-danger");
+        removeButton.innerHTML = "Ta bort";
+        removeButton.addEventListener("click", () => {
+            let index = Queues.indexOf(queue);
+            if(index > -1){
+                Queues.splice(index, 1);
+                displayQueue();
+            }
+        });
+        knapparDiv.appendChild(removeButton);
+
+        //Omboka-knapp
+        const ombokaButton = document.createElement("button");
+        ombokaButton.classList.add("btn", "btn-warning");
+        ombokaButton.setAttribute("data-bs-toggle", "modal");
+        ombokaButton.setAttribute("data-bs-target", "#OmbokaModal");
+        ombokaButton.innerHTML = "Omboka";
+        knapparDiv.appendChild(ombokaButton);
+
+        liWrapper.appendChild(knapparDiv);
+        //#endregion
+
+        queueList.appendChild(li);
+    })
+}
