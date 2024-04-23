@@ -2,61 +2,6 @@
 
 window.addEventListener("load", () => {
 
-    let otherInfoRef = document.querySelector("#otherInfo");
-    let otherInfoRemoveRef = document.querySelector("#otherInfoRemove");
-
-    otherInfoRef.addEventListener("mouseover", () => {
-        let infoRef = document.querySelector("#info");
-        infoRef.innerHTML = "Alergier, specialkost m.m";
-    });
-
-    otherInfoRef.addEventListener("mouseleave", () => {
-        let infoRef = document.querySelector("#info");
-        infoRef.innerHTML = "";
-    });
-
-    otherInfoRemoveRef.addEventListener("mouseover", () => {
-        let infoRef = document.querySelector("#infoRemove");
-        infoRef.innerHTML = "Alergier, specialkost m.m";
-    });
-
-    otherInfoRemoveRef.addEventListener("mouseleave", () => {
-        let infoRef = document.querySelector("#infoRemove");
-        infoRef.innerHTML = "";
-    });
-
-    let formAvbokaRef = document.querySelector("#avbokaForm");
-    let containerRemoveRef = document.querySelector("#containerRemove");
-
-    
-    //Lyssnare för att hämta en bokning i listan
-    /* formAvbokaRef.addEventListener("submit", (event) => {
-        event.preventDefault();
-        console.log("submit");
-       let searchNameRef = document.querySelector("#searchName");
-
-        bookings.forEach((Booking) => {
-            let searchNameValue = searchNameRef.value;
-
-            if(searchNameValue ==  Booking.name){
-                console.log("hej!");
-                containerRemoveRef.classList.remove("d-none");
-                let timeRef = document.querySelector("#timeRemove");
-                let tableRef = document.querySelector("#selectRemove");
-                let ovrigtRemoveRef = document.querySelector("#OvrigtRemove");
-
-                timeRef.value = Booking.time;
-                tableRef.value = Booking.bord;
-                ovrigtRemoveRef.value = Booking.otherInfo;
-            }
-            else{
-                containerRemoveRef.classList.add("d-none");
-            }  
-       });
-    });
- */
-    
-    bookings.forEach(Booking)
     /*Globaltobjekt som håller värden för timer som uppdaterar värdet i
     bokningsformulärets timer*/
     window.oGlobalobject = {
@@ -69,8 +14,6 @@ window.addEventListener("load", () => {
     oGlobalobject.timer = setInterval(() => {
         UpTime(oGlobalobject.houers, oGlobalobject.min, oGlobalobject.sec)
     }, 1000);
-
-    
     
 })
 
@@ -89,7 +32,7 @@ function UpTime(houers, min, sec){
         houers = 0;
     }
 
-    let timRef = document.querySelector("#Time");
+    let timRef = document.querySelector("#bokaTid");
     timRef.value = houers + ":" + min;
 
    return oGlobalobject.houers = houers, oGlobalobject.min = min, oGlobalobject.sec = sec;
@@ -275,7 +218,7 @@ function updateBookings(){
 
         //Omboka-knapp
         const ombokaButton = document.createElement("button");
-        ombokaButton.classList.add("btn", "btn-warning");
+        ombokaButton.classList.add("btn", "btn-secondary");
         ombokaButton.setAttribute("data-bs-toggle", "modal");
         ombokaButton.setAttribute("data-bs-target", "#OmbokaModal");
         ombokaButton.innerHTML = "Omboka";
@@ -585,10 +528,10 @@ function displayQueue(){
 
         //Omboka-knapp
         const bokaButton = document.createElement("button");
-        bokaButton.classList.add("btn", "btn-success");
+        bokaButton.classList.add("btn", "btn-primary");
         bokaButton.setAttribute("data-bs-toggle", "modal");
         bokaButton.setAttribute("data-bs-target", "#exampleModal");
-        bokaButton.innerHTML = "Bokabord";
+        bokaButton.innerHTML = "Boka Bord";
 
         bokaButton.addEventListener("click", () => {
             $("#bokaNamn").val(queue.name);
