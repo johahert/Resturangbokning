@@ -189,7 +189,7 @@
     <div class="modal fade" id="bokaModal" tabindex="-1" aria-labelledby="bokaModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header ">
             <h5 class="modal-title" id="bokaModalLabel">Boka</h5>
           </div>
           
@@ -198,22 +198,34 @@
               <div class="form-group">
                 <label for="bokaNamn" class="col-form-label">Namn:</label>
                 <input type="text" class="form-control" id="bokaNamn" required>
+                <div class="invalid-feedback">
+                  Ange namn
+                </div>
               </div>
               <div class="form-group">
                 <label for="bokaTelefon" class="col-form-label">Telefon:</label>
-                <input type="text" class="form-control" id="bokaTelefon" required>
+                <input type="tel" pattern="[0-9]{10,12}" class="form-control" id="bokaTelefon" required>
+                <div class="invalid-feedback">
+                  Ange giltigt telefonnummer
+                </div>
               </div>
               <div class="form-group">
                 <label for="bokaGaster" class="col-form-label" >Antal Gäster:</label>
                 <input type="number" min="1" max="5" class="form-control" id="bokaGaster" required>
+                <div class="invalid-feedback">
+                  Måste vara mellan 1-5 gäster
+                </div>
               </div>
               <div class="form-group ">
                 <label for="bokaTid" class="col-form-label">Tid:</label>
-                <input type="time" class="form-control" id="bokaTid">
+                <input type="time" class="form-control" id="bokaTid"  required min="10:00" max="22:00">
+                <div class="invalid-feedback">
+                  Ange tid mellan 10-22
+                </div>
               </div>
               <div class="form-group">
                 <label class="col-form-label" for="bokaBord">Bord</label>
-                <select class="form-select" id="bokaBord" aria-label="Default select example">
+                <select class="form-select" id="bokaBord" aria-label="Boka bord här">
                   <option selected>Välj Bord</option>             
                 </select>
               </div>
@@ -229,7 +241,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Avbryt</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="addToQueue">Lägg till i kö</button>
+              <button type="button" class="btn btn-secondary"  id="addToQueue">Lägg till i kö</button>
               <button type="submit" class="btn btn-primary"  id="bokaButton">Boka</button>
             </div>
           </form>

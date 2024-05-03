@@ -302,6 +302,7 @@ function updateBookings(){
 //Skicka bokning
 $("#bookingForm").submit(function(event){
     event.preventDefault();
+   
     let form = document.querySelector("#bookingForm");
     if (!form.checkValidity()){
         console.log('Formuläret är inte korrekt ifyllt');
@@ -489,14 +490,31 @@ function sorteraLista(){
 let addToQueueRef = document.querySelector("#addToQueue");
 addToQueueRef.addEventListener("click", (event) => {
     event.preventDefault();
+
+    //Validera formulär även vid kö
+    let form = document.querySelector("#bookingForm");
+    if (!form.checkValidity()){
+        console.log('Formuläret är inte korrekt ifyllt');
+        form.classList.add('was-validated')
+        
+        return;
+    }
+    //återställ validering
+    form.classList.remove('was-validated');
+    $("#bokaModal").modal("hide");
+    
     let name = $("#bokaNamn").val();
     let phone = $("#bokaTelefon").val();
     let time = $("#bokaTid").val();
     let guests = $("#bokaGaster").val();
-
+    
     let queue = new Queue(name, phone, time, guests);
     Queues.push(queue);
     displayQueue();
+
+    //stänger modal här istället
+    $("#bookingForm").trigger("reset");
+    
 })
 
 //visar kö
