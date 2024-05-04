@@ -1,9 +1,10 @@
 "use strict";
-//#region Fönsterlyssnare
+//#region Fönsterlyssnare och timer som automatiskt avbokar gästers bord efter en och en halv timme
+//Simmulerar en form av riktig butik
 
-/* window.addEventListener("load", () => {
+window.addEventListener("load", () => {
 
-   
+   //Skapar en global timer för att kunna kolla tiden och hur länge folk har varit inne och ätit
     window.oGlobalobject = {
         timer : null,
         houers : new Date().getHours(),
@@ -14,13 +15,27 @@
     oGlobalobject.timer = setInterval(() => {
         UpTime(oGlobalobject.houers, oGlobalobject.min, oGlobalobject.sec)
     }, 1000);
-    
-}) */
+}) 
+
+
+setInterval(() => {
+    bookings.forEach(booking => {
+        let timeSplit = booking.time.split(":");  
+        if(oGlobalobject.houers > timeSplit[0] && (oGlobalobject.min - timeSplit[1] == 30 || timeSplit[1] - oGlobalobject.min == 30)){
+            let index = bookings.indexOf(booking);
+            if(index > -1){
+                bookings.splice(index, 1);
+                addBord(booking.bord);
+                updateBookings();
+            }
+        }
+    });
+}, 1000);
 //#endregion
 
 //#region hämta klockslag
 //Funktion som uppdaterar klockslaget varje secund när timern körs
-/* function UpTime(houers, min, sec){
+function UpTime(houers, min, sec){
     sec += 1;
     if(sec == 60){
         min += 1;
@@ -33,12 +48,18 @@
     else if(houers == 24){
         houers = 0;
     }
-
-    let timRef = document.querySelector("#bokaTid");
-    timRef.value = houers + ":" + min;
+    let bokaModalRef = document.querySelector("#bokaModal");
+    let bokaModalAriaHiddenRef = bokaModalRef.getAttribute("aria-hidden");
+    let timeRef = document.querySelector("#bokaTid");
+    if(bokaModalAriaHiddenRef == "true"){
+/*         console.log("true");
+ */        timeRef.value = houers + ":" + min;
+        console.log(timeRef.value)
+    }
 
    return oGlobalobject.houers = houers, oGlobalobject.min = min, oGlobalobject.sec = sec;
-} */
+} 
+
 //Hämtar aktuell tid och skriver ut i formuläret när modal klickas
 $("#bokaModalButton").on("click", () => {
     let hrs = new Date().getHours();
