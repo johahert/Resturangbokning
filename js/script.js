@@ -1,3 +1,10 @@
+/* Deltagare
+Daniel Frisk - 000824
+Johan Hertz - 970422 
+Hannah Uhlán - 950901
+ */
+
+
 "use strict";
 //#region Fönsterlyssnare och timer som automatiskt avbokar gästers bord efter en och en halv timme
 //Simmulerar en form av riktig butik
