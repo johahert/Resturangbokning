@@ -393,62 +393,6 @@ function filtreraLista(){
         
     });
 }
-//Skapar sample-bokningar för testning - Fyll i antal gäster och klicka på knappen
-$(document).ready(function(){
-    $('#initSampleButton').on('click', () =>{
-        console.log('hej');
-        let antalGaster = parseInt($('#sampleGasterInput').val());
-        if((antalGaster <= 16 && antalGaster > 0) && !isNaN(antalGaster)){
-
-            //Rensa lediga bord
-            ledigaBord = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
-            bookings = [];
-            for(let i = 0; i < antalGaster; i++){
-
-                //Array med sample namn
-                var sampleNames = ['Kalle', 'Pelle', 'Olle', 'Nisse', 'Bosse', 'Lasse', 'Hasse', 'Johan', 'Johanna', 'Anna', 'Eva', 'Sara', 'Lena', 'Maja', 'Karin', 'Linn', 'Emma', 'Ida', 'Lisa', 'Maria', 'Jenny', 'Sofia', 'Hanna', 'Malin', 'Elin', 'Johannes', 'Anders', 'Peter', 'Mikael', 'Jonas', 'Fredrik', 'Daniel'];
-
-                //Slumpar ett mobilnummer
-                var name = sampleNames[Math.floor(Math.random() * sampleNames.length)];
-                var phone = '070-';
-                for(let i = 0; i < 7; i++){
-                    phone += Math.floor(Math.random() * 10);
-                }
-
-                //Hämtar ett random bord ur lediga bord
-                var bord = ledigaBord[Math.floor(Math.random() * ledigaBord.length)];
-
-                //Slumpar en tid mellan 8-22
-                var hrs = Math.floor(Math.random() * 15) + 8;
-                if(hrs < 10){
-                    hrs = '0' + hrs;
-                }
-                var mins = Math.floor(Math.random() * 60);
-                if(mins < 10){
-                    mins = '0' + mins;
-                }
-                var time = `${hrs}:${mins}`;
-
-                var gaster = Math.floor(Math.random() * 5) + 1;
-
-                //otherinfo tom just nu
-                var otherinfo = '';
-
-                //Skapar en bokning och lägger till
-                var booking = new Booking(name, phone, bord, time, gaster, otherinfo);
-                bookings.push(booking);
-
-                //Ta bort bord från lediga bord
-                taBortBord(bord);
-            }
-        }
-        //Uppdatera bokningar
-        updateBookings();
-        sorteraLista();
-        filtreraLista();
-            
-    });
-});
 
 //Sortera lista via select - kan för tillfället sortera på namn, tid och bordsnummer
 $(document).ready(() =>{
